@@ -23,8 +23,8 @@ const SignIn = () => {
                 <div className="mx-auto mb-4 text-center auth-logo">
                   <LogoBox
                     textLogo={{
-                      height: 24,
-                      width: 73,
+                      height: 80,
+                      width: 120,
                     }}
                     squareLogo={{
                       className: 'me-1',
@@ -38,7 +38,7 @@ const SignIn = () => {
                   <Col xs={12} md={8}>
                     <LoginForm />
 
-                    <ThirdPartyAuth />
+                    {/* <ThirdPartyAuth /> */}
                   </Col>
                 </Row>
               </div>
