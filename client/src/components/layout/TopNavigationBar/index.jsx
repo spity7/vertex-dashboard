@@ -1,47 +1,51 @@
-import { lazy } from 'react';
-import { Suspense } from 'react';
-import ActivityStreamToggle from './components/ActivityStreamToggle';
-import LeftSideBarToggle from './components/LeftSideBarToggle';
-import ProfileDropdown from './components/ProfileDropdown';
-import SearchBox from './components/SearchBox';
-import ThemeCustomizerToggle from './components/ThemeCustomizerToggle';
-import ThemeModeToggle from './components/ThemeModeToggle';
-const AppsDropdown = lazy(() => import('./components/AppsDropdown'));
-const Notifications = lazy(() => import('./components/Notifications'));
+import { lazy } from 'react'
+import { Suspense } from 'react'
+import ActivityStreamToggle from './components/ActivityStreamToggle'
+import LeftSideBarToggle from './components/LeftSideBarToggle'
+import ProfileDropdown from './components/ProfileDropdown'
+import SearchBox from './components/SearchBox'
+import ThemeCustomizerToggle from './components/ThemeCustomizerToggle'
+import ThemeModeToggle from './components/ThemeModeToggle'
+
+const AppsDropdown = lazy(() => import('./components/AppsDropdown'))
+const Notifications = lazy(() => import('./components/Notifications'))
+
 const TopNavigationBar = () => {
-  return <header className="topbar">
+  return (
+    <header className="topbar">
       <div className="container-xxl">
         <div className="navbar-header">
           <div className="d-flex align-items-center gap-2">
             <LeftSideBarToggle />
 
-            <SearchBox />
+            {/* <SearchBox /> */}
           </div>
           <div className="d-flex align-items-center gap-1">
             {/* Toggle Theme Mode */}
             <ThemeModeToggle />
 
             {/* Apps Dropdown */}
-            <Suspense>
+            {/* <Suspense>
               <AppsDropdown />
-            </Suspense>
+            </Suspense> */}
 
             {/* Notification Dropdown */}
-            <Suspense>
+            {/* <Suspense>
               <Notifications />
-            </Suspense>
+            </Suspense> */}
 
             {/* Toggle for Theme Customizer */}
-            <ThemeCustomizerToggle />
+            {/* <ThemeCustomizerToggle /> */}
 
             {/* Toggle for Activity Stream */}
-            <ActivityStreamToggle />
+            {/* <ActivityStreamToggle /> */}
 
             {/* Admin Profile Dropdown */}
             <ProfileDropdown />
           </div>
         </div>
       </div>
-    </header>;
-};
-export default TopNavigationBar;
+    </header>
+  )
+}
+export default TopNavigationBar
