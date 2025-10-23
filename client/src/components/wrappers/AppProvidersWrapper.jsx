@@ -1,23 +1,23 @@
-import { useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
-import { DEFAULT_PAGE_TITLE } from '@/context/constants';
-import { AuthProvider } from '@/context/useAuthContext';
-import { LayoutProvider } from '@/context/useLayoutContext';
-import { NotificationProvider } from '@/context/useNotificationContext';
-import { HelmetProvider } from 'react-helmet-async';
+import { useEffect } from 'react'
+import { ToastContainer } from 'react-toastify'
+import { DEFAULT_PAGE_TITLE } from '@/context/constants'
+import { AuthProvider } from '@/context/useAuthContext'
+import { LayoutProvider } from '@/context/useLayoutContext'
+import { NotificationProvider } from '@/context/useNotificationContext'
+import { HelmetProvider } from 'react-helmet-async'
 const handleChangeTitle = () => {
-  if (document.visibilityState == 'hidden') document.title = 'Please come back 🥺';else document.title = DEFAULT_PAGE_TITLE;
-};
-const AppProvidersWrapper = ({
-  children
-}) => {
+  if (document.visibilityState == 'hidden') document.title = 'Please come back 🥺'
+  else document.title = DEFAULT_PAGE_TITLE
+}
+const AppProvidersWrapper = ({ children }) => {
   useEffect(() => {
-    document.addEventListener('visibilitychange', handleChangeTitle);
+    document.addEventListener('visibilitychange', handleChangeTitle)
     return () => {
-      document.removeEventListener('visibilitychange', handleChangeTitle);
-    };
-  }, []);
-  return <HelmetProvider>
+      document.removeEventListener('visibilitychange', handleChangeTitle)
+    }
+  }, [])
+  return (
+    <HelmetProvider>
       <AuthProvider>
         <LayoutProvider>
           <NotificationProvider>
@@ -26,6 +26,7 @@ const AppProvidersWrapper = ({
           </NotificationProvider>
         </LayoutProvider>
       </AuthProvider>
-    </HelmetProvider>;
-};
-export default AppProvidersWrapper;
+    </HelmetProvider>
+  )
+}
+export default AppProvidersWrapper

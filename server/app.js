@@ -8,7 +8,6 @@ const rateLimiter = require("./middlewares/rateLimiter");
 const securityHeaders = require("./middlewares/securityHeaders");
 const csp = require("./middlewares/csp");
 const userRoutes = require("./routes/userRoutes");
-const propertyRoutes = require("./routes/propertyRoutes");
 const logger = require("./config/logger");
 require("./cron/cron");
 

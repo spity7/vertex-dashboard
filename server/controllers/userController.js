@@ -15,6 +15,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER, // Your Gmail address
     pass: process.env.EMAIL_PASS, // Your Gmail App Password
   },
+  tls: {
+    rejectUnauthorized: false, // Allow local dev
+  },
 });
 
 exports.signupUser = async (req, res) => {
