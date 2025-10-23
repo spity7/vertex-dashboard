@@ -124,6 +124,8 @@ const ResetPassword = lazy(() => import('@/app/(other)/auth/reset-pass/page'))
 const ResetPassword2 = lazy(() => import('@/app/(other)/auth/reset-pass-2/page'))
 const LockScreen = lazy(() => import('@/app/(other)/auth/lock-screen/page'))
 const LockScreen2 = lazy(() => import('@/app/(other)/auth/lock-screen-2/page'))
+const AuthVerifyEmail = lazy(() => import('@/app/(other)/auth/verify-email/page'))
+
 const initialRoutes = [
   {
     path: '/',
@@ -664,6 +666,11 @@ export const authRoutes = [
     name: 'Coming Soon',
     path: '/coming-soon',
     element: <ComingSoon />,
+  },
+  {
+    name: 'Verify Email',
+    path: '/auth/verify-email',
+    element: <AuthVerifyEmail />,
   },
 ]
 export const appRoutes = [

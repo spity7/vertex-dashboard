@@ -80,7 +80,7 @@ export function AuthProvider({ children }) {
         }),
       )
 
-      window.location.href = '/'
+      window.location.href = '/auth/verify-email'
     } catch (error) {
       // print full error (network / CORS / server) for debugging
       console.error('Signup error:', error)
