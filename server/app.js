@@ -8,6 +8,7 @@ const rateLimiter = require("./middlewares/rateLimiter");
 const securityHeaders = require("./middlewares/securityHeaders");
 const csp = require("./middlewares/csp");
 const userRoutes = require("./routes/userRoutes");
+const serviceRoutes = require("./routes/serviceRoutes");
 const logger = require("./config/logger");
 require("./cron/cron");
 
@@ -51,6 +52,7 @@ app.use(securityHeaders);
 
 // Routes
 app.use("/api/v1", userRoutes);
+app.use("/api/v1", serviceRoutes);
 // app.use("/api/v1", propertyRoutes);
 
 // errorhandling for Middleware

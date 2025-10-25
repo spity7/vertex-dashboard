@@ -5,6 +5,7 @@ import { AuthProvider } from '@/context/useAuthContext'
 import { LayoutProvider } from '@/context/useLayoutContext'
 import { NotificationProvider } from '@/context/useNotificationContext'
 import { HelmetProvider } from 'react-helmet-async'
+import { GlobalProvider } from '@/context/useGlobalContext'
 const handleChangeTitle = () => {
   if (document.visibilityState == 'hidden') document.title = 'Please come back 🥺'
   else document.title = DEFAULT_PAGE_TITLE
@@ -19,12 +20,14 @@ const AppProvidersWrapper = ({ children }) => {
   return (
     <HelmetProvider>
       <AuthProvider>
-        <LayoutProvider>
-          <NotificationProvider>
-            {children}
-            <ToastContainer theme="colored" />
-          </NotificationProvider>
-        </LayoutProvider>
+        <GlobalProvider>
+          <LayoutProvider>
+            <NotificationProvider>
+              {children}
+              <ToastContainer theme="colored" />
+            </NotificationProvider>
+          </LayoutProvider>
+        </GlobalProvider>
       </AuthProvider>
     </HelmetProvider>
   )

@@ -6,8 +6,10 @@ import PageMetaData from '@/components/PageTitle'
 import IconifyIcon from '@/components/wrappers/IconifyIcon'
 import { getAllEcommerceProducts } from '@/helpers/data'
 import ProductsListTable from './components/ProductsListTable'
-const Products = () => {
+
+const Services = () => {
   const [productsList, setProductsList] = useState()
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await getAllEcommerceProducts()
@@ -15,25 +17,26 @@ const Products = () => {
     }
     fetchData()
   }, [])
+
   return (
     <>
-      <PageMetaData title="Products List" />
-      <PageBreadcrumb title="Products List" subName="Ecommerce" />
+      <PageMetaData title="Services List" />
+      <PageBreadcrumb title="Services List" subName="Vertex" />
       <Row>
         <Col>
           <Card>
             <CardBody>
               <div className="d-flex flex-wrap justify-content-between gap-3">
-                <div className="search-bar">
+                {/* <div className="search-bar">
                   <span>
                     <IconifyIcon icon="bx:search-alt" className="mb-1" />
                   </span>
                   <input type="search" className="form-control" id="search" placeholder="Search ..." />
-                </div>
+                </div> */}
                 <div>
-                  <Link to="/ecommerce/products/create" className="btn btn-primary d-flex align-items-center">
+                  <Link to="/ecommerce/services/create" className="btn btn-primary d-flex align-items-center">
                     <IconifyIcon icon="bx:plus" className="me-1" />
-                    Add Product
+                    Add Service
                   </Link>
                 </div>
               </div>
@@ -45,4 +48,4 @@ const Products = () => {
     </>
   )
 }
-export default Products
+export default Services

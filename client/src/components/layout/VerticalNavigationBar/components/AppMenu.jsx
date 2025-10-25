@@ -70,6 +70,7 @@ const MenuItemWithChildren = ({ item, className, linkClassName, subMenuClassName
     </li>
   )
 }
+
 const MenuItem = ({ item, className, linkClassName }) => {
   return (
     <li className={className}>
@@ -77,6 +78,7 @@ const MenuItem = ({ item, className, linkClassName }) => {
     </li>
   )
 }
+
 const MenuItemLink = ({ item, className }) => {
   return (
     <Link
@@ -95,18 +97,22 @@ const MenuItemLink = ({ item, className }) => {
     </Link>
   )
 }
+
 const AppMenu = ({ menuItems }) => {
   const { pathname } = useLocation()
   const [activeMenuItems, setActiveMenuItems] = useState([])
+
   const toggleMenu = (menuItem, show) => {
     if (show) setActiveMenuItems([menuItem.key, ...findAllParent(menuItems, menuItem)])
   }
+
   const getActiveClass = useCallback(
     (item) => {
       return activeMenuItems?.includes(item.key) ? 'active' : ''
     },
     [activeMenuItems],
   )
+
   const activeMenu = useCallback(() => {
     const trimmedURL = pathname?.replaceAll('', '')
     const matchingMenuItem = getMenuItemFromURL(menuItems, trimmedURL)
@@ -150,9 +156,11 @@ const AppMenu = ({ menuItems }) => {
       }
     }
   }, [pathname, menuItems])
+
   useEffect(() => {
     if (menuItems && menuItems.length > 0) activeMenu()
   }, [activeMenu, menuItems])
+
   return (
     <ul className="navbar-nav">
       {(menuItems || []).map((item, idx) => {
