@@ -13,9 +13,6 @@ export const GlobalProvider = ({ children }) => {
     const instance = axios.create({
       baseURL: BASE_URL,
       withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
     })
 
     instance.interceptors.response.use(
@@ -30,7 +27,9 @@ export const GlobalProvider = ({ children }) => {
   }, [])
 
   const createService = async (data) => {
-    const response = await axiosInstance.post('/services', data)
+    const response = await axiosInstance.post('/services', data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
     return response.data
   }
 
