@@ -10,7 +10,7 @@ import ProductSubmittedForm from './ProductSubmittedForm'
 const formSteps = [
   {
     index: 1,
-    name: 'General Detail',
+    name: 'Service Details',
     icon: 'bxs:contact',
     tab: <GeneralDetailsForm />,
   },

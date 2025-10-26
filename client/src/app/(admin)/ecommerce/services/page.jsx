@@ -4,19 +4,24 @@ import { Link } from 'react-router-dom'
 import PageBreadcrumb from '@/components/layout/PageBreadcrumb'
 import PageMetaData from '@/components/PageTitle'
 import IconifyIcon from '@/components/wrappers/IconifyIcon'
-import { getAllEcommerceProducts } from '@/helpers/data'
-import ProductsListTable from './components/ProductsListTable'
+import { useGlobalContext } from '@/context/useGlobalContext'
+import ServicesListTable from './components/ServicesListTable'
 
 const Services = () => {
-  const [productsList, setProductsList] = useState()
+  const { getAllServices } = useGlobalContext()
+  const [servicesList, setServicesList] = useState([])
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAllEcommerceProducts()
-      setProductsList(data)
+    const fetchServices = async () => {
+      try {
+        const data = await getAllServices()
+        setServicesList(data)
+      } catch (error) {
+        console.error('Error fetching services:', error)
+      }
     }
-    fetchData()
-  }, [])
+    fetchServices()
+  }, [getAllServices])
 
   return (
     <>
@@ -36,12 +41,14 @@ const Services = () => {
                 <div>
                   <Link to="/ecommerce/services/create" className="btn btn-primary d-flex align-items-center">
                     <IconifyIcon icon="bx:plus" className="me-1" />
-                    Add Service
+                    Create Service
                   </Link>
                 </div>
               </div>
             </CardBody>
-            <div>{productsList && <ProductsListTable products={productsList} />}</div>
+            <div>
+              {servicesList.length > 0 ? <ServicesListTable services={servicesList} /> : <div className="text-center p-4">No services found</div>}
+            </div>
           </Card>
         </Col>
       </Row>

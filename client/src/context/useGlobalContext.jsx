@@ -33,10 +33,36 @@ export const GlobalProvider = ({ children }) => {
     return response.data
   }
 
+  const getAllServices = async () => {
+    const response = await axiosInstance.get('/services')
+    return response.data.services
+  }
+
+  const getServiceById = async (id) => {
+    const response = await axiosInstance.get(`/services/${id}`)
+    return response.data.service
+  }
+
+  const updateService = async (id, data) => {
+    const response = await axiosInstance.put(`/services/${id}`, data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    return response.data.service
+  }
+
+  const deleteService = async (id) => {
+    const response = await axiosInstance.delete(`/services/${id}`)
+    return response.data
+  }
+
   return (
     <GlobalContext.Provider
       value={{
         createService,
+        getAllServices,
+        getServiceById,
+        updateService,
+        deleteService,
       }}>
       {children}
     </GlobalContext.Provider>

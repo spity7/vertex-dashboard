@@ -27,4 +27,18 @@ async function uploadImage(fileBuffer, fileName, mimeType) {
   )}`;
 }
 
-module.exports = { uploadImage, bucket };
+async function deleteImage(fileUrl) {
+  if (!fileUrl) return;
+  try {
+    // Extract filename from public URL
+    const fileName = decodeURIComponent(fileUrl.split(`/${bucketName}/`)[1]);
+    const file = bucket.file(fileName);
+    await file.delete();
+    console.log(`Deleted old file: ${fileName}`);
+  } catch (err) {
+    // Don’t fail if file doesn’t exist
+    console.warn("Failed to delete old GCS file:", err.message);
+  }
+}
+
+module.exports = { uploadImage, bucket, deleteImage };
