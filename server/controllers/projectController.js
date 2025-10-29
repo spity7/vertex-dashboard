@@ -57,3 +57,46 @@ exports.createProject = async (req, res) => {
     });
   }
 };
+
+exports.getAllProjects = async (req, res) => {
+  try {
+    const projects = await Project.find().sort({ createdAt: -1 });
+    res.status(200).json({ projects });
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    res.status(500).json({ message: "Server error fetching projects" });
+  }
+};
+
+exports.deleteProject = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ message: "Project not found" });
+
+    // Delete thumbnail from GCS
+    if (project.thumbnailUrl) {
+      await deleteImage(project.thumbnailUrl);
+    }
+
+    // Delete all gallery images from GCS (if any)
+    if (Array.isArray(project.gallery) && project.gallery.length > 0) {
+      await Promise.all(
+        project.gallery.map(async (imageUrl) => {
+          try {
+            await deleteImage(imageUrl);
+          } catch (err) {
+            console.warn("⚠️ Failed to delete gallery image:", err.message);
+          }
+        })
+      );
+    }
+
+    // Delete project from MongoDB
+    await project.deleteOne();
+
+    res.status(200).json({ message: "Project deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting project:", error);
+    res.status(500).json({ message: "Server error deleting project" });
+  }
+};

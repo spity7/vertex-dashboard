@@ -72,7 +72,12 @@ const GeneralDetailsForm = () => {
 
       const formData = new FormData()
       formData.append('name', data.name)
-      formData.append('category', data.category)
+
+      // ✅ Convert value to label before sending
+      const selectedCategory = projectCategories.find((cat) => cat.value === data.category)
+      const categoryName = selectedCategory ? selectedCategory.label : data.category
+      formData.append('category', categoryName)
+
       formData.append('description', data.descQuill)
       formData.append('location', data.location)
       formData.append('thumbnail', thumbnailFile)

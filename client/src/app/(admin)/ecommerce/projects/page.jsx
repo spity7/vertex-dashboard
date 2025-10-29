@@ -4,19 +4,24 @@ import { Link } from 'react-router-dom'
 import PageBreadcrumb from '@/components/layout/PageBreadcrumb'
 import PageMetaData from '@/components/PageTitle'
 import IconifyIcon from '@/components/wrappers/IconifyIcon'
-import { getAllEcommerceProducts } from '@/helpers/data'
-import ProductsListTable from './components/ProductsListTable'
+import { useGlobalContext } from '@/context/useGlobalContext'
+import ProjectsListTable from './components/ProjectsListTable'
 
 const Projects = () => {
-  const [productsList, setProductsList] = useState()
+  const { getAllProjects } = useGlobalContext()
+  const [projectsList, setProjectsList] = useState([])
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAllEcommerceProducts()
-      setProductsList(data)
+    const fetchProjects = async () => {
+      try {
+        const data = await getAllProjects()
+        setProjectsList(data)
+      } catch (error) {
+        console.error('Error fetching projects:', error)
+      }
     }
-    fetchData()
-  }, [])
+    fetchProjects()
+  }, [getAllProjects])
 
   return (
     <>
@@ -41,7 +46,9 @@ const Projects = () => {
                 </div>
               </div>
             </CardBody>
-            <div>{productsList && <ProductsListTable products={productsList} />}</div>
+            <div>
+              {projectsList.length > 0 ? <ProjectsListTable projects={projectsList} /> : <div className="text-center p-4">No projects found</div>}
+            </div>
           </Card>
         </Col>
       </Row>

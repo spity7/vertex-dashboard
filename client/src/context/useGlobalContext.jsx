@@ -62,6 +62,16 @@ export const GlobalProvider = ({ children }) => {
     return response.data
   }
 
+  const getAllProjects = async () => {
+    const response = await axiosInstance.get('/projects')
+    return response.data.projects
+  }
+
+  const deleteProject = async (id) => {
+    const response = await axiosInstance.delete(`/projects/${id}`)
+    return response.data
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -71,6 +81,8 @@ export const GlobalProvider = ({ children }) => {
         updateService,
         deleteService,
         createProject,
+        getAllProjects,
+        deleteProject,
       }}>
       {children}
     </GlobalContext.Provider>
