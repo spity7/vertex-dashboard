@@ -1,5 +1,14 @@
 import * as yup from 'yup'
-import { categoriesData, customersData, ecommerceProductsData, inventoryData, invoicesData, ordersData, sellersData } from '@/assets/data/products'
+import {
+  projectsCategoriesData,
+  categoriesData,
+  customersData,
+  ecommerceProductsData,
+  inventoryData,
+  invoicesData,
+  ordersData,
+  sellersData,
+} from '@/assets/data/products'
 import { activityStreamData, appsData, notificationsData } from '@/assets/data/topbar'
 import { sleep } from '@/utils/promise'
 import { dataTableRecords, pricingData, projectsData, timelineData, transactionsData } from '@/assets/data/other'
@@ -65,10 +74,16 @@ export const getAllEcommerceProducts = async () => {
   return productsData
 }
 
+export const getAllProjectCategories = async () => {
+  await sleep()
+  return projectsCategoriesData
+}
+
 export const getAllProductCategories = async () => {
   await sleep()
   return categoriesData
 }
+
 export const getAllOrders = async () => {
   const data = ordersData.map((order) => {
     const customer = customersData.find((customer) => customer.id === order.customerId)

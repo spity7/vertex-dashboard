@@ -10,6 +10,8 @@ const Sales = lazy(() => import('@/app/(admin)/dashboard/sales/page'))
 const EcommerceServices = lazy(() => import('@/app/(admin)/ecommerce/services/page'))
 const EcommerceServiceCreate = lazy(() => import('@/app/(admin)/ecommerce/services/create/page'))
 const EcommerceServiceUpdate = lazy(() => import('@/app/(admin)/ecommerce/services/edit/[id]/page'))
+const EcommerceProjects = lazy(() => import('@/app/(admin)/ecommerce/projects/page'))
+const EcommerceProjectCreate = lazy(() => import('@/app/(admin)/ecommerce/projects/create/page'))
 
 const EcommerceProducts = lazy(() => import('@/app/(admin)/ecommerce/products/page'))
 const EcommerceProductDetails = lazy(() => import('@/app/(admin)/ecommerce/products/[productId]/page'))
@@ -171,9 +173,19 @@ const appsRoutes = [
     element: <EcommerceServiceCreate />,
   },
   {
-    name: 'Service Details',
+    name: 'Service Update',
     path: '/ecommerce/services/edit/:id',
     element: <EcommerceServiceUpdate />,
+  },
+  {
+    name: 'Projects',
+    path: '/ecommerce/projects',
+    element: <EcommerceProjects />,
+  },
+  {
+    name: 'Create Project',
+    path: '/ecommerce/projects/create',
+    element: <EcommerceProjectCreate />,
   },
 
   {

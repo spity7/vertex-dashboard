@@ -1,30 +1,45 @@
-import { useState } from 'react';
-import { formatFileSize } from '@/utils/other';
+import { useState, useEffect } from 'react'
+import { formatFileSize } from '@/utils/other'
+
 export default function useFileUploader(showPreview = true) {
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([])
+
   const handleAcceptedFiles = (files, callback) => {
-    let allFiles = [];
-    if (showPreview) {
-      files = files.map(file => {
-        return {
-          ...file,
-          preview: file['type']?.split('/')[0] === 'image' ? URL.createObjectURL(file) : undefined,
-          formattedSize: formatFileSize(file.size)
-        };
-      });
-      allFiles = [...selectedFiles, ...files];
-      setSelectedFiles(allFiles);
+    // 🧹 Handle reset case (when files is empty)
+    if (!files || files.length === 0) {
+      setSelectedFiles([])
+      if (callback) callback([])
+      return
     }
-    if (callback) callback(allFiles);
-  };
-  const removeFile = file => {
-    const newFiles = [...selectedFiles];
-    newFiles?.splice(newFiles.indexOf(file), 1);
-    setSelectedFiles(newFiles);
-  };
+
+    let allFiles = []
+
+    if (showPreview) {
+      files = files.map((file) => {
+        file.preview = file.type?.startsWith('image/') ? URL.createObjectURL(file) : undefined
+        file.formattedSize = formatFileSize(file.size)
+        return file
+      })
+      allFiles = [...selectedFiles, ...files]
+      setSelectedFiles(allFiles)
+    }
+
+    if (callback) callback(allFiles)
+  }
+
+  const removeFile = (file) => {
+    const newFiles = selectedFiles.filter((f) => f !== file)
+    setSelectedFiles(newFiles)
+  }
+
+  // 🧹 Clean up URLs on unmount
+  useEffect(() => {
+    return () => selectedFiles.forEach((file) => URL.revokeObjectURL(file.preview))
+  }, [selectedFiles])
+
   return {
     selectedFiles,
     handleAcceptedFiles,
-    removeFile
-  };
+    removeFile,
+  }
 }

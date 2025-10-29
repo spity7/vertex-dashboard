@@ -55,6 +55,13 @@ export const GlobalProvider = ({ children }) => {
     return response.data
   }
 
+  const createProject = async (data) => {
+    const response = await axiosInstance.post('/projects', data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    return response.data
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -63,6 +70,7 @@ export const GlobalProvider = ({ children }) => {
         getServiceById,
         updateService,
         deleteService,
+        createProject,
       }}>
       {children}
     </GlobalContext.Provider>
