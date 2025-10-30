@@ -137,7 +137,7 @@ const initialRoutes = [
   {
     path: '/',
     name: 'root',
-    element: <Navigate to="/dashboard/analytics" />,
+    element: <Navigate to="/ecommerce/services" />,
   },
   {
     path: '*',

@@ -78,14 +78,14 @@ const LoginForm = () => {
         }
       />
 
-      <div className="mb-3">
+      {/* <div className="mb-3">
         <div className="form-check">
           <input type="checkbox" className="form-check-input" id="checkbox-signin" />
           <label className="form-check-label" htmlFor="checkbox-signin">
             Remember me
           </label>
         </div>
-      </div>
+      </div> */}
       <div className="mb-1 text-center d-grid">
         <Button variant="primary" type="submit" disabled={loading}>
           Sign In
