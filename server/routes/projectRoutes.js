@@ -4,7 +4,10 @@ const router = express.Router();
 const {
   createProject,
   getAllProjects,
+  getProjectById,
+  updateProject,
   deleteProject,
+  deleteProjectImage,
 } = require("../controllers/projectController");
 
 const storage = multer.memoryStorage();
@@ -19,6 +22,16 @@ router.post(
   createProject
 );
 router.get("/projects", getAllProjects);
+router.get("/projects/:id", getProjectById);
+router.put(
+  "/projects/:id",
+  upload.fields([
+    { name: "thumbnail", maxCount: 1 },
+    { name: "gallery", maxCount: 30 },
+  ]),
+  updateProject
+);
 router.delete("/projects/:id", deleteProject);
+router.delete("/projects/:id/gallery", deleteProjectImage);
 
 module.exports = router;

@@ -12,6 +12,7 @@ const EcommerceServiceCreate = lazy(() => import('@/app/(admin)/ecommerce/servic
 const EcommerceServiceUpdate = lazy(() => import('@/app/(admin)/ecommerce/services/edit/[id]/page'))
 const EcommerceProjects = lazy(() => import('@/app/(admin)/ecommerce/projects/page'))
 const EcommerceProjectCreate = lazy(() => import('@/app/(admin)/ecommerce/projects/create/page'))
+const EcommerceProjectUpdate = lazy(() => import('@/app/(admin)/ecommerce/projects/edit/[id]/page'))
 
 const EcommerceProducts = lazy(() => import('@/app/(admin)/ecommerce/products/page'))
 const EcommerceProductDetails = lazy(() => import('@/app/(admin)/ecommerce/products/[productId]/page'))
@@ -186,6 +187,11 @@ const appsRoutes = [
     name: 'Create Project',
     path: '/ecommerce/projects/create',
     element: <EcommerceProjectCreate />,
+  },
+  {
+    name: 'Project Update',
+    path: '/ecommerce/projects/edit/:id',
+    element: <EcommerceProjectUpdate />,
   },
 
   {

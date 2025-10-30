@@ -67,8 +67,27 @@ export const GlobalProvider = ({ children }) => {
     return response.data.projects
   }
 
+  const getProjectById = async (id) => {
+    const response = await axiosInstance.get(`/projects/${id}`)
+    return response.data.project
+  }
+
+  const updateProject = async (id, data) => {
+    const response = await axiosInstance.put(`/projects/${id}`, data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    return response.data.project
+  }
+
   const deleteProject = async (id) => {
     const response = await axiosInstance.delete(`/projects/${id}`)
+    return response.data
+  }
+
+  const deleteProjectGalleryImage = async (id, imageUrl) => {
+    const response = await axiosInstance.delete(`/projects/${id}/gallery`, {
+      data: { imageUrl },
+    })
     return response.data
   }
 
@@ -82,7 +101,10 @@ export const GlobalProvider = ({ children }) => {
         deleteService,
         createProject,
         getAllProjects,
+        getProjectById,
+        updateProject,
         deleteProject,
+        deleteProjectGalleryImage,
       }}>
       {children}
     </GlobalContext.Provider>
