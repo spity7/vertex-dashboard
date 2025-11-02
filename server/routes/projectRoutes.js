@@ -10,8 +10,13 @@ const {
   deleteProjectImage,
 } = require("../controllers/projectController");
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 20 * 1024 * 1024, // 20MB per file
+    files: 30, // allow up to 30 files total
+  },
+});
 
 router.post(
   "/projects",

@@ -29,11 +29,25 @@ exports.createProject = async (req, res) => {
     );
 
     // Upload gallery (optional)
-    const galleryUrls = [];
-    for (const file of galleryFiles) {
-      const fileName = `projects/gallery/${Date.now()}_${file.originalname}`;
-      const imageUrl = await uploadImage(file.buffer, fileName, file.mimetype);
-      galleryUrls.push(imageUrl);
+    let galleryUrls = [];
+
+    if (galleryFiles.length > 0) {
+      try {
+        galleryUrls = await Promise.all(
+          galleryFiles.map(async (file) => {
+            const fileName = `projects/gallery/${Date.now()}_${
+              file.originalname
+            }`;
+            return await uploadImage(file.buffer, fileName, file.mimetype);
+          })
+        );
+      } catch (err) {
+        console.error("Error uploading one of the gallery images:", err);
+        return res.status(500).json({
+          message: "Failed to upload gallery images",
+          error: err.message,
+        });
+      }
     }
 
     // Save project to DB
@@ -118,12 +132,25 @@ exports.updateProject = async (req, res) => {
       updateData.thumbnailUrl = newThumbnailUrl;
     }
 
-    // ✅ Handle new gallery uploads (OPTION 1: append new images)
-    const newGalleryUrls = [];
-    for (const file of galleryFiles) {
-      const fileName = `projects/gallery/${Date.now()}_${file.originalname}`;
-      const imageUrl = await uploadImage(file.buffer, fileName, file.mimetype);
-      newGalleryUrls.push(imageUrl);
+    // ✅ Parallel upload for gallery
+    let newGalleryUrls = [];
+    if (galleryFiles.length > 0) {
+      try {
+        newGalleryUrls = await Promise.all(
+          galleryFiles.map(async (file) => {
+            const fileName = `projects/gallery/${Date.now()}_${
+              file.originalname
+            }`;
+            return await uploadImage(file.buffer, fileName, file.mimetype);
+          })
+        );
+      } catch (err) {
+        console.error("Error uploading gallery images:", err);
+        return res.status(500).json({
+          message: "Failed to upload one or more gallery images",
+          error: err.message,
+        });
+      }
     }
 
     if (newGalleryUrls.length > 0) {
