@@ -14,6 +14,7 @@ import DropzoneFormInput from '@/components/form/DropzoneFormInput'
 
 const generalFormSchema = yup.object({
   name: yup.string().required('Project name is required'),
+  title: yup.string().required('Project title is required'),
   category: yup.string().required('Project Category is required'),
   descQuill: yup.string().required('Project description is required'),
   location: yup.string().required('Project location is required'),
@@ -56,6 +57,7 @@ const GeneralDetailsForm = () => {
     resolver: yupResolver(generalFormSchema),
     defaultValues: {
       name: '',
+      title: '',
       category: '',
       descQuill: '',
       location: '',
@@ -72,6 +74,7 @@ const GeneralDetailsForm = () => {
 
       const formData = new FormData()
       formData.append('name', data.name)
+      formData.append('title', data.title)
 
       // ✅ Convert value to label before sending
       const selectedCategory = projectCategories.find((cat) => cat.value === data.category)
@@ -94,6 +97,7 @@ const GeneralDetailsForm = () => {
       // ✅ Clear all form fields properly
       reset({
         name: '',
+        title: '',
         category: '',
         descQuill: '',
         location: '',
@@ -138,8 +142,22 @@ const GeneralDetailsForm = () => {
       </Row>
 
       <Row>
+        <Col lg={6}>
+          <TextFormInput
+            control={control}
+            label="Project Title"
+            placeholder="Enter project title"
+            containerClassTitle="mb-3"
+            id="project-title"
+            name="title"
+            // error={errors.title?.message}
+          />
+        </Col>
+      </Row>
+
+      <Row>
         <Col lg={12}>
-          <div className="mb-5">
+          <div className="mb-5 mt-3">
             <label className="form-label">Project Description</label>
             <Controller
               name="descQuill"

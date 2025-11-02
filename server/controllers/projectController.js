@@ -3,13 +3,14 @@ const { uploadImage, deleteImage } = require("../utils/gcs");
 
 exports.createProject = async (req, res) => {
   try {
-    const { name, category, description, location } = req.body;
+    const { name, title, category, description, location } = req.body;
     const thumbnailFile = req.files?.thumbnail?.[0];
     const galleryFiles = req.files?.gallery || [];
 
-    if (!name || !category || !description || !location) {
+    if (!name || !title || !category || !description || !location) {
       return res.status(400).json({
-        message: "Name, category, description, and location are required",
+        message:
+          "Name, title, category, description, and location are required",
       });
     }
 
@@ -38,6 +39,7 @@ exports.createProject = async (req, res) => {
     // Save project to DB
     const newProject = await Project.create({
       name,
+      title,
       category,
       description,
       location,
@@ -81,7 +83,7 @@ exports.getProjectById = async (req, res) => {
 
 exports.updateProject = async (req, res) => {
   try {
-    const { name, category, description, location } = req.body;
+    const { name, title, category, description, location } = req.body;
     const thumbnailFile = req.files?.thumbnail?.[0];
     const galleryFiles = req.files?.gallery || [];
 
@@ -91,7 +93,7 @@ exports.updateProject = async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    const updateData = { name, category, description, location };
+    const updateData = { name, title, category, description, location };
 
     // ✅ Handle new thumbnail upload
     if (thumbnailFile) {

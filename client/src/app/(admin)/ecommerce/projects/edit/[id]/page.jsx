@@ -18,6 +18,7 @@ const EditProject = () => {
 
   const [project, setProject] = useState(null)
   const [name, setName] = useState('')
+  const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
   const [location, setLocation] = useState('')
@@ -50,6 +51,7 @@ const EditProject = () => {
         const data = await getProjectById(id)
         setProject(data)
         setName(data.name)
+        setTitle(data.title)
         setDescription(data.description)
 
         // ✅ Find matching option by label (since API gives category name)
@@ -85,6 +87,7 @@ const EditProject = () => {
       setLoading(true)
       const formData = new FormData()
       formData.append('name', name)
+      formData.append('title', title)
       formData.append('description', description)
 
       // ✅ Convert selected category value -> label (to match backend)
@@ -138,6 +141,11 @@ const EditProject = () => {
                 <div className="mb-3">
                   <label className="form-label">Project Name</label>
                   <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} required />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Project Title</label>
+                  <input type="text" className="form-control" value={title} onChange={(e) => setTitle(e.target.value)} required />
                 </div>
 
                 {/* ✅ Replace input with dropdown */}
