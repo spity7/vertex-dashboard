@@ -35,14 +35,14 @@ const EditService = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]
-    if (file && file.type === 'image/svg+xml') {
+    if (file && file.type.startsWith('image/')) {
       setIcon(file)
       const reader = new FileReader()
       reader.onload = () => setPreview(reader.result)
       reader.readAsDataURL(file)
     } else {
       setIcon(null)
-      alert('Only .svg files are allowed')
+      alert('Only image files are allowed (e.g., PNG, JPG, SVG, WebP, GIF)')
     }
   }
 
@@ -92,8 +92,8 @@ const EditService = () => {
                 </div>
 
                 <div className="mb-3">
-                  <label className="form-label">Service Icon (.svg only)</label>
-                  <input type="file" accept=".svg" className="form-control" onChange={handleFileChange} />
+                  <label className="form-label">Service Icon</label>
+                  <input type="file" accept="image/*" className="form-control" onChange={handleFileChange} />
                   {preview && (
                     <div className="mt-3">
                       <p className="fw-bold mb-1">Preview:</p>

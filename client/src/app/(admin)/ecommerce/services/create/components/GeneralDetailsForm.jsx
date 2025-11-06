@@ -13,9 +13,11 @@ const generalFormSchema = yup.object({
   descQuill: yup.string().required('Service description is required'),
   icon: yup
     .mixed()
-    .required('SVG icon is required')
-    .test('fileType', 'Only .svg files are allowed', (value) => {
-      return value && value[0] && value[0].type === 'image/svg+xml'
+    .required('Service image is required')
+    .test('fileType', 'Only image files are allowed (SVG, PNG, JPG, etc.)', (value) => {
+      if (!value || !value[0]) return false
+      const allowedTypes = ['image/svg+xml', 'image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif']
+      return allowedTypes.includes(value[0].type)
     }),
 })
 
@@ -50,7 +52,7 @@ const GeneralDetailsForm = () => {
       const formData = new FormData()
       formData.append('name', data.name)
       formData.append('description', data.descQuill)
-      formData.append('icon', data.icon[0]) // SVG
+      formData.append('icon', data.icon[0])
 
       await createService(formData)
 
@@ -69,10 +71,9 @@ const GeneralDetailsForm = () => {
     }
   }
 
-  // ✅ Handle SVG preview
   const handleFileChange = (e) => {
     const file = e.target.files[0]
-    if (file && file.type === 'image/svg+xml') {
+    if (file && file.type.startsWith('image/')) {
       const reader = new FileReader()
       reader.onload = () => setPreview(reader.result)
       reader.readAsDataURL(file)
@@ -134,24 +135,24 @@ const GeneralDetailsForm = () => {
       <Row>
         <Col lg={6}>
           <div className="mb-4 mt-4">
-            <label className="form-label">Service Icon (SVG only)</label>
+            <label className="form-label">Service Icon</label>
             <input
               type="file"
-              accept=".svg"
+              accept="image/*"
               {...register('icon')}
               className="form-control"
               onChange={(e) => {
                 handleFileChange(e)
-                // manually update form state for react-hook-form
                 register('icon').onChange(e)
               }}
             />
+
             {errors.icon && <p className="text-danger mt-1">{errors.icon.message}</p>}
 
             {preview && (
               <div className="mt-3">
                 <p className="mb-1 fw-bold">Preview:</p>
-                <img src={preview} alt="SVG preview" width="100" height="100" />
+                <img src={preview} alt="Image preview" width="100" height="100" />
               </div>
             )}
           </div>

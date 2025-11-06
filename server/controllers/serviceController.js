@@ -13,11 +13,11 @@ exports.createService = async (req, res) => {
     }
 
     if (!file) {
-      return res.status(400).json({ message: "SVG icon is required" });
+      return res.status(400).json({ message: "Image icon is required" });
     }
 
-    if (file.mimetype !== "image/svg+xml") {
-      return res.status(400).json({ message: "Only .svg files are allowed" });
+    if (!file.mimetype.startsWith("image/")) {
+      return res.status(400).json({ message: "Only image files are allowed" });
     }
 
     const fileName = `services/icons/${Date.now()}_${file.originalname}`;
@@ -74,8 +74,10 @@ exports.updateService = async (req, res) => {
 
     // If new icon uploaded → upload to Google Cloud and replace
     if (file) {
-      if (file.mimetype !== "image/svg+xml") {
-        return res.status(400).json({ message: "Only .svg files are allowed" });
+      if (!file.mimetype.startsWith("image/")) {
+        return res
+          .status(400)
+          .json({ message: "Only image files are allowed" });
       }
 
       if (existingService.iconUrl) {
