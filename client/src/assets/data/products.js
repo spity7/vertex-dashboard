@@ -25,6 +25,10 @@ export const projectsCategoriesData = [
     id: 'pc2',
     name: 'Mechanical',
   },
+  {
+    id: 'pc3',
+    name: 'MEP',
+  },
 ]
 
 export const categoriesData = [

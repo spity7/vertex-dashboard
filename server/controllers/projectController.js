@@ -76,7 +76,7 @@ exports.createProject = async (req, res) => {
 
 exports.getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find().sort({ createdAt: -1 });
+    const projects = await Project.find();
     res.status(200).json({ projects });
   } catch (error) {
     console.error("Error fetching projects:", error);

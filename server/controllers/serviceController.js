@@ -41,7 +41,7 @@ exports.createService = async (req, res) => {
 
 exports.getAllServices = async (req, res) => {
   try {
-    const services = await Service.find().sort({ createdAt: -1 });
+    const services = await Service.find();
     res.status(200).json({ services });
   } catch (error) {
     console.error("Error fetching services:", error);
